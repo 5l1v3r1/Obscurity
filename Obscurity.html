@@ -1,0 +1,238 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/pure-min.css" integrity="sha384-oAOxQR6DkCoMliIh8yFnu25d7Eq/PHS21PClpwjOTeU2jRSq11vu66rf90/cZr47" crossorigin="anonymous">
+<link rel="stylesheet" href="style.css">
+
+<title>URL Obfuscation Framework</title>
+<meta name="description" content="A free open source framework for pentesters to obscure URLs to bypass WAFs" />
+
+<h1 id="title">URL Obfuscation Framework</h1>
+<p id="desc">A free open source framework for pentesters to obscure URLs to bypass WAFs</p>
+<p id="desc2">Full credit to @h43z and his tool - https://h.43z.one/ipconverter for the initial idea for this</p>
+
+  <script>
+    function hit(ip){		
+      const decimalv1 = 'http://' + ip
+      const hexv1 = ip.split('.').reduce((acc, cur, i, arr) => {
+        return acc + '0x' + parseInt(cur).toString(16) + (arr.length-1 !== i ? '.' : '')
+      }, 'http://')
+
+      const hexv2 = ip.split('.').reduce((acc, cur, i, arr) => {
+        let h = parseInt(cur).toString(16)
+        if ((h.length % 2) > 0) {
+          h = "0" + h;
+        }
+        return acc + h
+      }, 'http://0x')
+
+      const hexv3 = 'http://' + hexv1.slice(7).split(".")[0] + '.0x' + hexv2.slice(11)
+      const hexv4 = 'http://' + hexv1.slice(7).slice(0, 10) + '0x' + hexv2.slice(13)
+
+      const octalv1 = ip.split('.').reduce((acc, cur, i, arr) => {
+        return acc + '0' + parseInt(cur).toString(8) + (arr.length-1 !== i ? '.' : '')
+      }, 'http://')
+
+      const octalv2 = ip.split('.').reduce((acc, cur, i, arr) => {
+        return acc + '0'.repeat(Math.floor(Math.random() * 9) + 1) 
+          + parseInt(cur).toString(8) + (arr.length-1 !== i ? '.' : '')
+      }, 'http://')
+
+
+      const dwordv1 = 'http://' + ip.split('.').reduce((acc, cur, i, arr) => {
+        return (256 * acc) + parseInt(cur)
+      }, 0)
+
+      const octalv3 = "http://0" + parseInt(dwordv1.slice(7)).toString(8)
+
+      const percentv1 = [...ip].reduce((acc, cur) => {
+        return acc + "%" + cur.charCodeAt(0).toString(16)
+      }, 'http://')
+
+      const mixedv1 = 'http://' + decimalv1.slice(7).split(".")[0] + '.' + hexv1.slice(7).split(".")[1] + '.' + octalv2.slice(7).split(".")[2] + '.' + hexv1.slice(7).split(".")[3]
+
+	  var temp = '';
+	  
+      temp = `${decimalv1}`;
+	  
+	  /*if (document.getElementById('openredirect').checked)
+	  temp = */
+	  if (document.getElementById('segment1').checked)
+		temp += `
+${hexv1}`;
+
+	  if (document.getElementById('segment2').checked)
+		temp += `
+${hexv2}`;
+
+	  if (document.getElementById('segment3').checked)
+		temp += `
+${hexv3}`;
+
+	  if (document.getElementById('segment4').checked)
+		temp += `
+${hexv4}`;
+
+	  if (document.getElementById('segment5').checked)
+		temp += `
+${octalv1}`;
+
+	  if (document.getElementById('segment6').checked)
+		temp += `
+${octalv2}`;
+
+	  if (document.getElementById('segment7').checked)
+		temp += `
+${octalv3}`;
+
+	  if (document.getElementById('segment8').checked)
+		temp += `
+${dwordv1}`;
+
+	  if (document.getElementById('segment9').checked)
+		temp += `
+${percentv1}`;
+
+	  if (document.getElementById('segment10').checked)
+		temp += `
+${mixedv1}`;
+
+
+output.value = temp;
+window.scrollTo(0,document.body.scrollHeight);
+	
+    }
+	
+	function toggle(source, classn) {
+  checkboxes = document.getElementsByClassName(classn);
+  for(var i=0, n=checkboxes.length;i<n;i++) {
+    checkboxes[i].checked = source.checked;
+  }
+}
+
+function examples()
+{
+var textArea = document.getElementById('vulntextarea');
+	textArea.value = `https://accounts.youtube.com/accounts/SetSID?ilo=1&ils=a4cc1b7ed445598%20f16cef403bb3b0311&seb=1075543814612377600&ilc=0&continue=<url>
+https://duckduckgo.com/l/?kh=-1&uddg=<url>`;
+}
+  </script>
+  
+  </head>
+  
+  
+  <body>
+	<fieldset>
+        <legend>IP or URL</legend>
+        <input id='i' type="text" value='216.58.214.227' placeholder="URL">
+    </fieldset>
+	<div style="width=100%" class="row">
+		<div id="cont1">
+			<br>
+			
+		<fieldset id="obscure">
+        <legend>IP Address Obfuscation</legend>
+		<label for="all" class="pure-checkbox">
+        <input id="checkall" type="checkbox" value="" onClick="toggle(this, 'chcks')"> Check/Uncheck All
+		</label>
+		<br>
+		<label for="one" class="pure-checkbox">
+			<input id="segment1" class="chcks" type="checkbox" value=""> 1 Segment Hex
+		</label>
+		<label for="two" class="pure-checkbox">
+			<input id="segment2" class="chcks" type="checkbox" value=""> 2 Segment Hex
+		</label>
+		<label for="three" class="pure-checkbox">
+			<input id="segment3" class="chcks" type="checkbox" value=""> 3 Segment Hex
+		</label>
+		<label for="four" class="pure-checkbox">
+			<input id="segment4" class="chcks" type="checkbox" value=""> 4 Segment Hex
+		</label>
+		<label for="five" class="pure-checkbox">
+			<input id="segment5" class="chcks" type="checkbox" value=""> 1 Segment Octal
+		</label>
+		<label for="six" class="pure-checkbox">
+			<input id="segment6" class="chcks" type="checkbox" value=""> 2 Segment Octal
+		</label>
+		<label for="seven" class="pure-checkbox">
+			<input id="segment7" class="chcks" type="checkbox" value=""> 3 Segment Octal
+		</label>
+		<label for="eight" class="pure-checkbox">
+			<input id="segment8" class="chcks" type="checkbox" value=""> Dword Encoding
+		</label>
+		<label for="nine" class="pure-checkbox">
+			<input id="segment9" class="chcks" type="checkbox" value=""> Character Encoding
+		</label>
+		<label for="ten" class="pure-checkbox">
+			<input id="segment10" class="chcks" type="checkbox" value=""> Decimal + Hex + Octal + Hex
+		</label>
+		<button type="submit" class="pure-button pure-button-primary" onclick='hit(i.value)'>Obfuscate</button>
+    </fieldset>
+
+		</div>
+		
+		<div id="cont2">
+			<br>
+	<fieldset id="csubstitutions">
+        <legend>Configure Substitutions</legend>
+		<label for="all" class="pure-checkbox">
+			<input id="checkall" type="checkbox" value="" onClick="toggle(this, 'cchcks')"> Check/Uncheck All
+		</label>
+		<br>
+		<label for="one" class="pure-checkbox">
+			<input id="csegment1" class="cchcks" type="checkbox" value=""> 'a' - '\u0430'
+		</label>
+		<label for="two" class="pure-checkbox">
+			<input id="csegment2" class="cchcks" type="checkbox" value=""> 'c' - '\u03F2'
+		</label>
+		<label for="three" class="pure-checkbox">
+			<input id="csegment3" class="cchcks" type="checkbox" value=""> 'e' - '\u0435'
+		</label>
+		<label for="four" class="pure-checkbox">
+			<input id="csegment4" class="cchcks" type="checkbox" value=""> 'o' - '\u043E'
+		</label>
+		<label for="five" class="pure-checkbox">
+			<input id="csegment5" class="cchcks" type="checkbox" value=""> 'p' - '\u0440'
+		</label>
+		<label for="six" class="pure-checkbox">
+			<input id="csegment6" class="cchcks" type="checkbox" value=""> 's' - '\u0455'
+		</label>
+		<label for="seven" class="pure-checkbox">
+			<input id="csegment7" class="cchcks" type="checkbox" value=""> 'd' - '\u0501'
+		</label>
+		<label for="eight" class="pure-checkbox">
+			<input id="csegment8" class="cchcks" type="checkbox" value=""> 'q' - '\u051B'
+		</label>
+		<label for="nine" class="pure-checkbox">
+			<input id="csegment9" class="cchcks" type="checkbox" value=""> 'w' - '\u051D'
+		</label>
+				<br>
+		<button type="submit" id="evilurl" class="pure-button pure-button-primary" onclick='evilurl()'>Cyrillic Substitution</button>
+    </fieldset>
+		</div>
+		
+		<div id="cont3">
+			<br>
+			<fieldset id="obscureredirect">
+				<legend>Obscure By OpenRedirect</legend>
+				<textarea id="vulntextarea" class="pure-input-1-2" placeholder="E.g. https://hangouts.google.com/linkredirect?dest=<url>"></textarea>
+				<button id="example" type="submit" class="pure-button pure-button-primary" onclick='examples()'>Load Examples</button>
+				<button id="openredirectbutton" type="submit" class="pure-button pure-button-primary" onclick='openredirect()'>Obscure</button>
+			</fieldset>
+		</div>
+	
+		
+		<div id="cont4">
+		<h3>Final URLs</h3>
+		<textarea id='output' class="pure-input-1-2" placeholder="Results will be appear here..."></textarea>
+		<div class="btnsfinaldown">
+			<button type="submit" class="pure-button pure-button-primary left" onclick='encode()'>Encode</button>
+			<button type="submit" class="pure-button pure-button-primary left" onclick='decode()'>Decode</button>
+			<div class="btnsfinal">
+				User:Pass Injection <input type="text" id="userpassinput" placeholder="user:pass">
+				<button type="submit" class="pure-button pure-button-primary" onclick='userpass()'>Inject</button>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="js/codes.js"></script>
+  </body>
+</html>
