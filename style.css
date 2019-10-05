@@ -76,7 +76,12 @@ textarea
 	float: left;
 	margin-left: 8px;
 }
-
+.divider
+{
+    width:8px;
+    height:auto;
+    display:inline-block;
+}
 #i
 {
 	float: left;
