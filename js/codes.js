@@ -31,6 +31,8 @@ function userpass()
 
 function evilurl()
 {
+	var lines = document.getElementById('output');
+	linessplit = lines.value.split('\n');
 
 	var r = confirm("Warning - If you have not registered the relevant domains in cyrillic this will break the URLs");
 	if (r == true) 
@@ -38,36 +40,34 @@ function evilurl()
 		
 		
 	  if (document.getElementById('csegment1').checked)
-		i.value = i.value.toLowerCase().replace(/a/g, '\u0430');
+		lines.value = lines.value.toLowerCase().replace('a', '\u0430');
 
 	  if (document.getElementById('csegment2').checked)
-		i.value = i.value.toLowerCase().replace(/c/g, '\u03F2');
+		lines.value = lines.value.toLowerCase().replace('c', '\u03F2');
 
 	  if (document.getElementById('csegment3').checked)
-		i.value = i.value.toLowerCase().replace(/e/g, '\u0435');
+		lines.value = lines.value.toLowerCase().replace('e', '\u0435');
 
 	  if (document.getElementById('csegment4').checked)
-		i.value = i.value.toLowerCase().replace(/o/g, '\u043E');
+		lines.value = lines.value.toLowerCase().replace('o', '\u043E');
 
 	  if (document.getElementById('csegment5').checked)
-		i.value = i.value.toLowerCase().replace(/p/g, '\u0440');
+		lines.value = lines.value.toLowerCase().replace('p', '\u0440');
 
 	  if (document.getElementById('csegment6').checked)
-		i.value = i.value.toLowerCase().replace(/s/g, '\u0455');
+		lines.value = lines.value.toLowerCase().replace('s', '\u0455');
 
 	  if (document.getElementById('csegment7').checked)
-		i.value = i.value.toLowerCase().replace(/d/g, '\u0501');
+		lines.value = lines.value.toLowerCase().replace('d', '\u0501');
 
 	  if (document.getElementById('csegment8').checked)
-		i.value = i.value.toLowerCase().replace(/q/g, '\u051B');
+		lines.value = lines.value.toLowerCase().replace('q', '\u051B');
 
 	  if (document.getElementById('csegment9').checked)
-		i.value = i.value.toLowerCase().replace(/w/g, '\u051D');
-	
-	  document.getElementById('output').value = i.value;
+		lines.value = lines.value.toLowerCase().replace('w', '\u051D');
 	
 		window.scrollTo(0,document.body.scrollHeight);
-	}	
+	}
 }
 
 function openredirect()
@@ -78,24 +78,26 @@ function openredirect()
 		return;
 	}
 
-if (document.getElementById('vulntextarea').value.length < 2)
+if (output.value.length < 2)
 {
 		alert('You need to Obfuscate the IP first');
 		return;
 }
 output.value = '';
+var templines = output.value.split ('\n');
 
 var textArea = document.getElementById('vulntextarea');
 var lines = textArea.value.split('\n');
-var entry = document.getElementById('i');
 var res = '';
 
+for (var m = 0; m < templines.length; m++)
+{
 for (var j = 0; j < lines.length; j++) 
 {
   if (lines[j] === '')
 	continue;
   if (j == 0)
-	res = lines[j].replace(/<url>/g, entry.value); 
+	res = lines[j].replace(/<url>/g, templines[m]); 
   else
   {
 	res = lines[j].replace (/<url>/g, res);
@@ -103,4 +105,5 @@ for (var j = 0; j < lines.length; j++)
 }
 output.value +=  res + '\n';	
 window.scrollTo(0,document.body.scrollHeight);
+}
 }
