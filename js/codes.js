@@ -67,7 +67,7 @@ function evilurl()
 	  document.getElementById('output').value = i.value;
 	
 		window.scrollTo(0,document.body.scrollHeight);
-	}
+	}	
 }
 
 function openredirect()
@@ -78,26 +78,24 @@ function openredirect()
 		return;
 	}
 
-if (output.value.length < 2)
+if (document.getElementById('vulntextarea').value.length < 2)
 {
 		alert('You need to Obfuscate the IP first');
 		return;
 }
 output.value = '';
-var templines = output.value.split ('\n');
 
 var textArea = document.getElementById('vulntextarea');
 var lines = textArea.value.split('\n');
+var entry = document.getElementById('i');
 var res = '';
 
-for (var m = 0; m < templines.length; m++)
-{
 for (var j = 0; j < lines.length; j++) 
 {
   if (lines[j] === '')
 	continue;
   if (j == 0)
-	res = lines[j].replace(/<url>/g, templines[m]); 
+	res = lines[j].replace(/<url>/g, entry.value); 
   else
   {
 	res = lines[j].replace (/<url>/g, res);
@@ -105,5 +103,4 @@ for (var j = 0; j < lines.length; j++)
 }
 output.value +=  res + '\n';	
 window.scrollTo(0,document.body.scrollHeight);
-}
 }
