@@ -31,8 +31,6 @@ function userpass()
 
 function evilurl()
 {
-	var lines = document.getElementById('output');
-	linessplit = lines.value.split('\n');
 
 	var r = confirm("Warning - If you have not registered the relevant domains in cyrillic this will break the URLs");
 	if (r == true) 
@@ -40,31 +38,33 @@ function evilurl()
 		
 		
 	  if (document.getElementById('csegment1').checked)
-		lines.value = lines.value.toLowerCase().replace('a', '\u0430');
+		i.value = i.value.toLowerCase().replace(/a/g, '\u0430');
 
 	  if (document.getElementById('csegment2').checked)
-		lines.value = lines.value.toLowerCase().replace('c', '\u03F2');
+		i.value = i.value.toLowerCase().replace(/c/g, '\u03F2');
 
 	  if (document.getElementById('csegment3').checked)
-		lines.value = lines.value.toLowerCase().replace('e', '\u0435');
+		i.value = i.value.toLowerCase().replace(/e/g, '\u0435');
 
 	  if (document.getElementById('csegment4').checked)
-		lines.value = lines.value.toLowerCase().replace('o', '\u043E');
+		i.value = i.value.toLowerCase().replace(/o/g, '\u043E');
 
 	  if (document.getElementById('csegment5').checked)
-		lines.value = lines.value.toLowerCase().replace('p', '\u0440');
+		i.value = i.value.toLowerCase().replace(/p/g, '\u0440');
 
 	  if (document.getElementById('csegment6').checked)
-		lines.value = lines.value.toLowerCase().replace('s', '\u0455');
+		i.value = i.value.toLowerCase().replace(/s/g, '\u0455');
 
 	  if (document.getElementById('csegment7').checked)
-		lines.value = lines.value.toLowerCase().replace('d', '\u0501');
+		i.value = i.value.toLowerCase().replace(/d/g, '\u0501');
 
 	  if (document.getElementById('csegment8').checked)
-		lines.value = lines.value.toLowerCase().replace('q', '\u051B');
+		i.value = i.value.toLowerCase().replace(/q/g, '\u051B');
 
 	  if (document.getElementById('csegment9').checked)
-		lines.value = lines.value.toLowerCase().replace('w', '\u051D');
+		i.value = i.value.toLowerCase().replace(/w/g, '\u051D');
+	
+	  document.getElementById('output').value = i.value;
 	
 		window.scrollTo(0,document.body.scrollHeight);
 	}
