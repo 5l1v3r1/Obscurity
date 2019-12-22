@@ -16,7 +16,6 @@
       const hexv1 = ip.split('.').reduce((acc, cur, i, arr) => {
         return acc + '0x' + parseInt(cur).toString(16) + (arr.length-1 !== i ? '.' : '')
       }, 'http://')
-
       const hexv2 = ip.split('.').reduce((acc, cur, i, arr) => {
         let h = parseInt(cur).toString(16)
         if ((h.length % 2) > 0) {
@@ -24,32 +23,23 @@
         }
         return acc + h
       }, 'http://0x')
-
       const hexv3 = 'http://' + hexv1.slice(7).split(".")[0] + '.0x' + hexv2.slice(11)
       const hexv4 = 'http://' + hexv1.slice(7).slice(0, 10) + '0x' + hexv2.slice(13)
-
       const octalv1 = ip.split('.').reduce((acc, cur, i, arr) => {
         return acc + '0' + parseInt(cur).toString(8) + (arr.length-1 !== i ? '.' : '')
       }, 'http://')
-
       const octalv2 = ip.split('.').reduce((acc, cur, i, arr) => {
         return acc + '0'.repeat(Math.floor(Math.random() * 9) + 1) 
           + parseInt(cur).toString(8) + (arr.length-1 !== i ? '.' : '')
       }, 'http://')
-
-
       const dwordv1 = 'http://' + ip.split('.').reduce((acc, cur, i, arr) => {
         return (256 * acc) + parseInt(cur)
       }, 0)
-
       const octalv3 = "http://0" + parseInt(dwordv1.slice(7)).toString(8)
-
       const percentv1 = [...ip].reduce((acc, cur) => {
         return acc + "%" + cur.charCodeAt(0).toString(16)
       }, 'http://')
-
       const mixedv1 = 'http://' + decimalv1.slice(7).split(".")[0] + '.' + hexv1.slice(7).split(".")[1] + '.' + octalv2.slice(7).split(".")[2] + '.' + hexv1.slice(7).split(".")[3]
-
 	  var temp = '';
 	  
       temp = `${decimalv1}`;
@@ -59,44 +49,33 @@
 	  if (document.getElementById('segment1').checked)
 		temp += `
 ${hexv1}`;
-
 	  if (document.getElementById('segment2').checked)
 		temp += `
 ${hexv2}`;
-
 	  if (document.getElementById('segment3').checked)
 		temp += `
 ${hexv3}`;
-
 	  if (document.getElementById('segment4').checked)
 		temp += `
 ${hexv4}`;
-
 	  if (document.getElementById('segment5').checked)
 		temp += `
 ${octalv1}`;
-
 	  if (document.getElementById('segment6').checked)
 		temp += `
 ${octalv2}`;
-
 	  if (document.getElementById('segment7').checked)
 		temp += `
 ${octalv3}`;
-
 	  if (document.getElementById('segment8').checked)
 		temp += `
 ${dwordv1}`;
-
 	  if (document.getElementById('segment9').checked)
 		temp += `
 ${percentv1}`;
-
 	  if (document.getElementById('segment10').checked)
 		temp += `
 ${mixedv1}`;
-
-
 output.value = temp;
 window.scrollTo(0,document.body.scrollHeight);
 	
@@ -108,7 +87,6 @@ window.scrollTo(0,document.body.scrollHeight);
     checkboxes[i].checked = source.checked;
   }
 }
-
 function examples()
 {
 var textArea = document.getElementById('vulntextarea');
