@@ -1,4 +1,4 @@
-function encode() 
+function encode()
 {
 	var obj = document.getElementById('output');
 	var unencoded = obj.value;
