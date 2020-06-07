@@ -1,5 +1,5 @@
 # Obscurity
-A URL and IP Address Obfuscation Toolkit to assist with Pentesting.'
+A URL and IP Address Obfuscation Toolkit to assist with Pentesting.
 
 Useful Link for Understanding URL Obfuscation - https://github.com/jesugmz/url-obfuscation
 
