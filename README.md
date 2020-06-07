@@ -4,6 +4,9 @@ A URL and IP Address Obfuscation Toolkit to assist with Pentesting.
 Useful Link for Understanding URL Obfuscation - https://github.com/jesugmz/url-obfuscation
 
 # Usage
+
+Clone the repo and open Obscurity.html
+
 A relatively self-explanatory system, input your URL (or IP address) and path and progress through the boxes in order. 
 
 
